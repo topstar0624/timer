@@ -1,0 +1,692 @@
+@charset "utf-8";
+
+/* 基本のカラー
+#333; /* 黒 *
+#777; /* 濃い灰 *
+#CCC; /* 薄い灰 *
+#393; /* 緑 *
+#8B4; /* 黃緑 *
+#39F; /* 青 *
+#9CC; /* 水色 *
+#F55; /* 赤 *
+#F93; /* 橙 *
+#FC3; /* 黄 *
+#EEE; /* 白 *
+*/
+
+
+/* 基本のフォントサイズ16px
+16px*4em=64px
+16px*3.5em=56px
+16px*3em=48px
+16px*2.5em=40px
+16px*2em=32px
+16px*1.5em=24px
+16px*1.25em=20px
+16px*0.875em=14px
+16px*0.75em=12px
+16px*0.5em=8px
+16px*0.25em=4px
+*/
+
+
+/* ******************** リセット ******************** */
+
+* {
+	box-sizing: border-box;
+}
+
+html * {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	-webkit-text-size-adjust: 100%;
+	color: #333;
+	font-family: Verdana, "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", Meiryo, sans-serif;
+	font-size: 16px;
+	line-height: 1em;
+	text-align: justify;
+	text-justify: distribute;
+	letter-spacing: -0.05em;
+}
+
+
+/* 新sections要素をブロック化 */
+
+header,
+nav,
+main,
+article,
+section,
+aside,
+footer,
+div {
+	display: block;
+	box-sizing: border-box;
+	position: relative;
+}
+
+
+/* ******************** headline ******************** */
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 1em 0 0.5em;
+	font-weight: bold;
+	line-height: 1.25em;
+}
+
+h1 {
+	display: none;
+}
+
+h2 {
+	padding-top: 1em;
+	text-align: center;
+	border-top: 1px #CCC solid;
+}
+
+h2:first-child {
+	/* 打ち消し */
+	margin-top: 0;
+	padding-top: 0;
+	border-top: none;
+}
+
+h3 {
+	padding-left: 1em;
+	text-indent: -1em;
+}
+
+
+/* ******************** anchor ******************** */
+
+a {
+	display: inline-block;
+	color: #39F;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #8B4;
+	text-decoration: underline;
+}
+
+header a,
+footer a {
+	color: #EEE;
+}
+
+
+/* ******************** img ******************** */
+
+img {
+	display: inline-block;
+	border: none;
+}
+
+a:hover img {
+	color: #CCC;
+	opacity: 0.7;
+	text-decoration: none;
+}
+
+
+/* ******************** table ******************** */
+
+table {
+	table-layout: fixed;
+	width: 100%;
+	line-height: 1.25em;
+	border-collapse: collapse;
+}
+
+th {
+	width: 5.5em;
+}
+
+td.width_1em {
+	width: 1px;
+}
+
+
+/* ******************** list ******************** */
+
+ul,
+ol,
+dl {
+	margin: 1em 0;
+	line-height: 1.75em;
+	list-style: none;
+}
+
+ul:first-child,
+ol:first-child,
+dl:first-child,
+dt:first-child {
+	/* 上書き */
+	margin-top: 0;
+}
+
+dt {
+	margin-top: 1em;
+	font-weight: bold;
+}
+
+
+/* ******************** form ******************** */
+
+input {
+	width: 100%;
+	padding: .25em;
+	font-size: 1.5em;
+	color: #333;
+	border: 1px #CCC solid;
+	border-radius: .25em;
+}
+
+input:focus {
+	color: #333;
+}
+
+button,
+.button {
+	display: inline-block;
+	;
+	padding: .25em 1em;
+	color: #333;
+	font-size: 1em;
+	border: none;
+	border-bottom: 5px rgba(0, 0, 0, 0.2) solid;
+	border-radius: .25em;
+	cursor: pointer;
+}
+
+button:hover,
+.button:hover {
+	color: #333;
+	text-decoration: none;
+	border-top: 3px transparent solid;
+	border-bottom: 2px transparent solid;
+}
+
+button[type="submit"] {
+	width: 100%;
+	margin-top: 0.5em;
+	font-size: 1.5em;
+	font-weight: bold;
+	background-color: #FC3;
+}
+
+button[type="button"],
+.button {
+	width: auto;
+	margin: 0.5em auto 0;
+	font-weight: bold;
+	background-color: #CCC;
+}
+
+.block_button-container {
+	margin-top: 1em;
+	/* floatの入れ子対策 */
+	overflow: hidden;
+}
+
+.button_next {
+	float: right;
+}
+
+.button_back {
+	float: left;
+}
+
+.button_center {
+	float: none;
+	margin: 0 auto;
+}
+
+
+/* ******************** その他共通 ******************** */
+
+p {
+	margin: 1em 0;
+	line-height: 1.75em;
+}
+
+p:first-child {
+	/* 上書き */
+	margin-top: 0;
+}
+
+p:last-child {
+	/* 上書き */
+	margin-bottom: 0;
+}
+
+hr {
+	display: none;
+}
+
+
+/* ******************** Material icons ******************** */
+
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 16px;
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	text-transform: none;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-feature-settings: 'liga';
+	font-feature-settings: 'liga';
+}
+
+
+/* ******************** body ******************** */
+
+body {
+	background-color: #777;
+}
+
+
+/* ******************** header ******************** */
+
+header {}
+
+#a_logo {
+	position: fixed;
+	z-index: 1000;
+	top: -40px;
+	left: -10px;
+	width: 90px;
+	height: 90px;
+	padding: 40px 0 0 20px;
+	color: #FFF;
+	letter-spacing: -0.25em;
+	background-color: #393;
+	border-radius: 80px;
+}
+
+#a_logo span {
+	display: block;
+}
+
+nav {
+	position: fixed;
+	z-index: 999;
+	width: 100%;
+	height: 40px;
+	text-align: right;
+	background-color: #393;
+	border-bottom: 3px rgba(0, 0, 0, 0.2) solid;
+}
+
+nav:hover {
+	border-top: 2px transparent solid;
+	border-bottom: 1px transparent solid;
+}
+
+nav ul {
+	margin: 0 1em 0 0;
+}
+
+nav ul li {
+	display: inline-block;
+	margin-left: 0.5em;
+	line-height: 40px;
+}
+
+nav ul li .material-icons {
+	position: relative;
+	top: 4px;
+	font-size: 1.25em;
+}
+
+
+/* ******************** main ******************** */
+
+main {
+	background-color: #EEE;
+}
+
+
+/* ******************** section ******************** */
+
+section {
+	padding: 4em 0;
+}
+
+
+/* ******************** #section_task-log ******************** */
+
+#section_task-log {}
+
+
+/* ******************** #section_task-timer ******************** */
+
+#section_task-timer {
+	background-color: #9CC;
+}
+
+input[name="hours"],
+input[name="minutes"] {
+	font-size: 3em;
+	text-align: center;
+}
+
+
+/* ******************** #section_user-login ******************** */
+
+#section_user-signup {
+	background-color: #8B4;
+}
+
+
+/* ******************** #section_timer ******************** */
+
+#section_timer {
+	/* 上書き */
+	padding: 2.5em 0;
+}
+
+#section_timer p {
+	font-size: 3em;
+	font-weight: bold;
+}
+
+#section_timer td {
+	height: 1.5em;
+	font-weight: bold;
+	line-height: 1em;
+}
+
+#section_timer td:first-child {
+	text-align: right;
+}
+
+#section_timer .td_time {
+	width: 210px;
+	font-size: 3em;
+	text-align: center;
+}
+
+#section_timer .td_time small {
+	font-size: 0.5em;
+	vertical-align: 18%;
+}
+
+#section_timer td:last-child {
+	text-align: left;
+}
+
+#block_timer-title {
+	/* 参考：http://on-ze.com/archives/648 */
+	overflow: hidden;
+	position: relative;
+}
+
+#block_timer-title p {
+	margin: 0;
+	padding-left: 100%;
+	display: inline-block;
+	white-space: nowrap;
+	-webkit-animation-name: marquee;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-duration: 10s;
+	-webkit-animation-iteration-count: infinite;
+	-moz-animation-name: marquee;
+	-moz-animation-timing-function: linear;
+	-moz-animation-duration: 10s;
+	-moz-animation-iteration-count: infinite;
+	-ms-animation-name: marquee;
+	-ms-animation-timing-function: linear;
+	-ms-animation-duration: 10s;
+	-ms-animation-iteration-count: infinite;
+	-o-animation-name: marquee;
+	-o-animation-timing-function: linear;
+	-o-animation-duration: 10s;
+	-o-animation-iteration-count: infinite;
+	-webkit-animation-name: marquee;
+	animation-name: marquee;
+	-webkit-animation-timing-function: linear;
+	animation-timing-function: linear;
+	-webkit-animation-duration: 10s;
+	animation-duration: 10s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes marquee {
+	from {
+		-webkit-transform: translate(0%);
+	}
+	99%,
+	to {
+		-webkit-transform: translate(-100%);
+	}
+}
+
+@keyframes marquee {
+	from {
+		-webkit-transform: translate(0%);
+		transform: translate(0%);
+	}
+	99%,
+	to {
+		-webkit-transform: translate(-100%);
+		transform: translate(-100%);
+	}
+}
+
+#block_timer-limit {
+	background-color: #8B4;
+}
+
+#block_timer-elapse {
+	background-color: #FC3;
+}
+
+#block_timer-subtract {
+	background-color: #9CC;
+}
+
+#block_timer-subtract.over {
+	background-color: #F55;
+}
+
+
+/* ******************** footer ******************** */
+
+footer {
+	padding: 1.5em;
+	color: #EEE;
+	font-size: .875em;
+	text-align: center;
+}
+
+footer li {
+	display: inline-block;
+	padding: 0 .5em;
+}
+
+
+/* ******************** 使い回しブロック要素クラス ******************** */
+
+.block_inner {
+	max-width: 320px;
+	margin: 0 auto;
+	padding: 0 10px;
+}
+
+.block_hidden {
+	/* コピペ時には表示させる */
+	height: 1px;
+	color: #EEE;
+}
+
+
+/* ******************** 使い回しプロパティ別クラス ******************** */
+
+.text-align_center {
+	text-align: center;
+}
+
+.text-align_right {
+	text-align: right;
+}
+
+.text-align_left {
+	text-align: left;
+}
+
+
+/* コメントアウトの代わり */
+
+@media all and (min-width: 10000px) {
+	header form ul {
+		margin-bottom: 2em;
+	}
+	header form li {
+		display: inline-block;
+		width: 48%;
+	}
+	header form li:first-child {
+		margin-right: 4%
+	}
+	header form li:last-child {
+		width: 100%;
+		margin-top: 1em;
+	}
+	header form input,
+	header form button {
+		width: 100%;
+	}
+	/* ******************** 使い回しフォーム ******************** */
+	textarea {
+		height: 10em;
+		resize: vertical;
+	}
+	input[type="checkbox"],
+	input[type="radio"] {
+		width: auto;
+		/* input{width: 100%;}を打ち消し */
+		margin-right: .25em;
+		/* 16px*0.25em=4px */
+		border: none;
+		/* borderを打ち消し */
+	}
+	.span_required {
+		/* 必須項目 */
+		padding: 1px 2px;
+		color: #FFF;
+		/* 白 */
+		font-size: 12px;
+		/* 親要素に関係なく12px固定 */
+		font-weight: normal;
+		background-color: #F55;
+		/* 赤 */
+		border-radius: .25em;
+		/* 12px*0.25em=3px 角丸IE8以下未対応 */
+	}
+	.span_option {
+		/* 任意項目 */
+		padding: 1px 2px;
+		color: #FFF;
+		/* 白 */
+		font-size: 12px;
+		/* 親要素に関係なく12px固定 */
+		font-weight: normal;
+		background-color: #777;
+		/* 濃い灰 */
+		border-radius: .25em;
+		/* 12px*0.25em=3px 角丸IE8以下未対応 */
+	}
+	label {
+		margin-right: .75em;
+		/* 16px*0.75em=12px */
+	}
+	/* ******************** 使い回しどこでもclass ******************** */
+	.attention {
+		color: #F55;
+		/* 赤 */
+	}
+	/* ******************** 使い回しプロパティ別class ******************** */
+	/* display */
+	.display_none {
+		display: none;
+	}
+	/* width */
+	.width_full {
+		width: 100%;
+	}
+	.margin_0 {
+		margin: 0 !important;
+	}
+	.margin-top_0 {
+		margin-top: 0;
+	}
+	.margin-top_1em {
+		margin-top: 1em;
+	}
+	.margin-top_little {
+		margin-top: .75em;
+		/* 16px*0.75em=12px */
+	}
+	.font-size_big {
+		font-size: 1.5em;
+		/* 16px*1.5em=24px */
+		line-height: 1em;
+		/* 16px*1.5em=24px */
+	}
+	.float_left {
+		float: left;
+	}
+	.float_right {
+		float: right;
+	}
+	.line-height_large {
+		line-height: 2em;
+		/* 16px*2em=32px */
+	}
+	.line-height_reset {
+		line-height: 1em;
+	}
+	.border_none,
+	.border_none th,
+	.border_none td {
+		border: none;
+	}
+	.column-count_4 {
+		-moz-column-count: 4;
+		-webkit-column-count: 4;
+		column-count: 3;
+		/* IE9以下非対応 */
+		margin-left: 0;
+	}
+	/* 要素指定 修正必要 */
+	.a_rightbutton {
+		display: block;
+	}
+	.a_centerbutton {
+		display: block;
+		overflow: hidden;
+		text-align: center;
+	}
+	.a_centerbutton button {
+		float: none;
+		margin: 0;
+	}
+	.ul_disc {
+		list-style-type: disc;
+	}
+}
