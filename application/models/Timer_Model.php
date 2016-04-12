@@ -199,6 +199,18 @@ class Timer_Model extends CI_Model
 				'pass' => $array['pass'],
 				'created' => $array['created'],
 			);
+		} elseif ($table_name === 'user_table') {
+			$this->db->where('key', $array['key']);
+			$temp_user = $this->db->get('temp_user_table');
+			if($temp_user){
+				$row = $temp_user->row();
+				$insert_string = array(
+					'name' => substr($row->email, 0, strpos($row->email, '@')),
+					'email' => $row->email,
+					'pass' => $row->pass,
+					'created' => $array['created'],
+				);
+			}
 		} elseif ($table_name === 'task_table') {
 			$insert_string = array(
 				'user_id' => 1,
@@ -235,6 +247,19 @@ class Timer_Model extends CI_Model
 			return true;
 		}else{
 			//ユーザーが存在しなかった場合
+			return false;
+		}
+	}
+	
+	public function is_valid_key($key){
+		$this->db->where('key', $key);
+		$query = $this->db->get('temp_user_table');
+		
+		if($query->num_rows() == 1){
+			//キーが存在しない場合
+			return true;
+		} else {
+			//キーが存在しない場合
 			return false;
 		}
 	}

@@ -96,12 +96,10 @@ class User extends CI_Controller {
 			$this->email->to($this->input->post('email'));
 			$this->email->subject('【サクッとタイマー】仮登録が完了しました。');
 			$this->email->message('
-				<p>会員登録をしていただきありがとうございます。</p>
-				<p>
-					<a href="'.base_url().'user/resister/'.$key.'" title="本登録">
-						こちらをクリックして、会員登録を完了してください。
-					</a>
-				</p>
+会員登録をしていただきありがとうございます。
+
+こちらをクリックして、会員登録を完了してください。
+'.base_url().'user/resister/'.$key.'
 			');
 			if($this->email->send()) {
 				//メール送信が成功した場合
@@ -122,15 +120,13 @@ class User extends CI_Controller {
 		echo $data['message'];
 	}
 	
-	public function test_mail()
-	{
-		$this->load->library('email');
-		$this->email->from('no-reply@3910.club', 'Your Name');
-		$this->email->to('topstar.0624@gmail.com');
-		$this->email->subject('Email Test');
-		$this->email->message('Testing the email class.');
-		$this->email->send();
-
-		echo $this->email->print_debugger();
+	public function resister($key){
+		if($this->Timer_Model->is_valid_key($key)){
+			//キーが正しい場合
+			$array['key'] = $key;
+			$data['message'] = $this->Timer_Model->insert_array_model('user_table', $array);
+		} else {
+			echo 'keyが間違ってるよ';
+		}
 	}
 }
