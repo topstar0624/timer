@@ -78,7 +78,7 @@
 										<!-- /#block_timer-limit -->
 										<? } ?>
 											<div class="block_inner">
-												<div class="block_button-container">
+												<div class="block_button-container margin-top_05em">
 													<button type="submit" onclick="stop_timer();">ストップ</button>
 													<button type="button" onclick="restart_timer();" class="button_back">はじめからやり直し</button>
 													<button type="button" onclick="closed_timer();" class="button_next">閉じる</button>
@@ -201,7 +201,7 @@
 				}
 
 				function closed_timer() {
-					if (!confirm('カウントを削除してこのウインドゥを閉じますか？')) {
+					if (!confirm('カウントを削除してこのウインドウを閉じますか？')) {
 						return false;
 					} else {
 						window.close();

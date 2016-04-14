@@ -236,7 +236,7 @@ class Timer_Model extends CI_Model
 		return $message;
 	}
 
-	public function can_login()
+	public function is_user()
 	{
 		$this->db->where('email', $this->input->post('email')); //POSTされたemailデータとDB情報を照合する
 		$this->db->where('pass', $this->input->post('pass')); //POSTされたパスワードデータとDB情報を照合する

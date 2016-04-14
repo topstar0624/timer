@@ -197,7 +197,6 @@ input:focus {
 button,
 .button {
 	display: inline-block;
-	;
 	padding: .25em 1em;
 	color: #333;
 	font-size: 1em;
@@ -301,11 +300,9 @@ body {
 
 /* ******************** header ******************** */
 
-header {}
-
 #a_logo {
 	position: fixed;
-	z-index: 1000;
+	z-index: 900;
 	top: -40px;
 	left: -10px;
 	width: 90px;
@@ -323,7 +320,8 @@ header {}
 
 nav {
 	position: fixed;
-	z-index: 999;
+	z-index: 800;
+	top: 0;
 	width: 100%;
 	height: 40px;
 	text-align: right;
@@ -356,6 +354,7 @@ nav ul li .material-icons {
 /* ******************** main ******************** */
 
 main {
+	margin-top: 40px;
 	background-color: #EEE;
 }
 
@@ -363,7 +362,7 @@ main {
 /* ******************** section ******************** */
 
 section {
-	padding: 4em 0;
+	padding: 2em 0 3em;
 }
 
 
@@ -385,7 +384,7 @@ input[name="minutes"] {
 }
 
 
-/* ******************** #section_user-login ******************** */
+/* ******************** #section_user-signup ******************** */
 
 #section_user-signup {
 	background-color: #8B4;
@@ -395,8 +394,7 @@ input[name="minutes"] {
 /* ******************** #section_timer ******************** */
 
 #section_timer {
-	/* 上書き */
-	padding: 2.5em 0;
+	padding-top: 0;
 }
 
 #section_timer p {
@@ -519,6 +517,23 @@ footer li {
 	padding: 0 .5em;
 }
 
+/* ******************** 使い回しブロック要素ID ******************** */
+
+#block_flash {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	width: 100%;
+	height: 40px;
+	color: #FFF;
+	text-align: center;
+	background-color: rgba(0,0,0,0.8);
+}
+
+#block_flash p {
+	line-height: 40px;
+}
 
 /* ******************** 使い回しブロック要素クラス ******************** */
 
@@ -534,8 +549,11 @@ footer li {
 	color: #EEE;
 }
 
-
 /* ******************** 使い回しプロパティ別クラス ******************** */
+
+.margin-top_05em {
+	margin-top: 0.5em !important;
+}
 
 .text-align_center {
 	text-align: center;
