@@ -2,6 +2,6 @@
 #参考）http://d.hatena.ne.jp/u_eupha/20110818/1313642138
 <IfModule mod_rewrite.c>
 RewriteEngine on
-RewriteCond $1 !^(index\.php|common)
+RewriteCond $1 !^(index\.php|common|favicon\.ico)
 RewriteRule ^(.*)$ index.php/$1 [L]
 </IfModule>

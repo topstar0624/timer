@@ -16,11 +16,15 @@ class Manage extends CI_Controller {
 
 	function create_table($table_name)
 	{
-		echo $this->Timer_Model->create_table_model($table_name);
+		$_SESSION['flash'] =  $this->Timer_Model->create_table_model($table_name);
+		$this->session->mark_as_flash('flash');
+		redirect('manage/');
 	}
 
 	function drop_table($table_name)
 	{
-		echo $this->Timer_Model->drop_table_model($table_name);
+		$_SESSION['flash'] =  $this->Timer_Model->drop_table_model($table_name);
+		$this->session->mark_as_flash('flash');
+		redirect('manage/');
 	}
 }

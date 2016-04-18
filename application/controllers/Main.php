@@ -11,14 +11,6 @@ class Main extends CI_Controller {
 
 	public function index()
 	{
-		$data['message'] = '';
-		if($_SERVER['REQUEST_METHOD'] == 'POST'){
-			if($this->session->userdata('ticket') === $_POST['ticket']) { //リロード対策
-				$this->session->unset_userdata('ticket');
-				$data['message'] = $this->Timer_Model->insert_array_model('task_table', $_POST);
-			}
-		}
-
 		//モバイル判定
 		//参考）https://syncer.jp/how-to-use-mobile-detect
 		$data['mobile'] = false;
@@ -34,11 +26,23 @@ class Main extends CI_Controller {
 	public function timer()
 	{
 		$data['ticket'] = md5(uniqid(rand()));
-		$this->session->set_userdata('ticket', $data['ticket']);
-		/*$this->input->set_cookie(array(
-			'name' => 'ticket',
-			'value' => $data['ticket'],
-		));*/
+		$_SESSION['ticket'] = $data['ticket'];
 		$this->load->view('main/timer', $data);
+	}
+	
+	public function timer_post()
+	{
+		if($_SERVER['REQUEST_METHOD'] == 'POST'){
+			if($_SESSION['ticket'] === $_POST['ticket']) { //リロード対策
+				unset($_SESSION['ticket']);
+				if($this->Timer_Model->insert_array_model('task_table', $_POST)) {
+					$_SESSION['flash'] = 'タスクを記録しました。';
+				} else {
+					$_SESSION['flash'] = 'タスクの記録に失敗しました。';
+				}
+				$this->session->mark_as_flash('flash');
+			}
+		}
+		redirect('/');
 	}
 }

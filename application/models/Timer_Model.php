@@ -222,26 +222,56 @@ class Timer_Model extends CI_Model
 				'created' => $array['created'],
 			);
 		} else {
+			/*
 			$message = $table_name?$table_name.'は':'';
 			$message =+ '定義されていません';
 			return $message;
+			*/
+			return false;
 		}
 		$query = $this->db->insert_string($table_name, $insert_string);
 		$flag = $this->db->query($query);
 		if($flag) {
-			$message = $table_name.'への挿入に成功しました';
+			//$message = $table_name.'への挿入に成功しました';
+			return true;
 		} else {
-			$message = $table_name.'の挿入に失敗しました';
+			//$message = $table_name.'の挿入に失敗しました';
+			return false;
 		}
-		return $message;
+		//return $message;
+	}
+	
+	public function delete_row_model($table_name = '', $array)
+	{
+		$array['deleted'] = date('Y-m-d H:i:s');
+		
+		if($table_name === 'temp_user_table') {
+			$update_string = array(
+				'deleted' => $array['deleted'],
+				'status' => 0,
+			);
+			$this->db->where('key', $array['key']);
+		}
+		$flag = $this->db->update($table_name, $update_string);
+		if($flag) {
+			//$message = $table_name.'への挿入に成功しました';
+			return true;
+		} else {
+			//$message = $table_name.'の挿入に失敗しました';
+			return false;
+		}
+		//return $message;
+		
 	}
 
 	public function is_user()
 	{
-		$this->db->where('email', $this->input->post('email')); //POSTされたemailデータとDB情報を照合する
-		$this->db->where('pass', $this->input->post('pass')); //POSTされたパスワードデータとDB情報を照合する
+		$this->db->where(array(
+			'email' => $_POST['email'],
+			'pass' => $_POST['pass'],
+			'status' => 1,
+		));
 		$query = $this->db->get('user_table');
-
 		if($query->num_rows() == 1){
 			//ユーザーが存在した場合
 			return true;
@@ -251,8 +281,11 @@ class Timer_Model extends CI_Model
 		}
 	}
 	
-	public function is_valid_key($key){
-		$this->db->where('key', $key);
+	public function is_key($key){
+		$this->db->where(array(
+			'key' => $key,
+			'status' => 1,
+		));
 		$query = $this->db->get('temp_user_table');
 		
 		if($query->num_rows() == 1){

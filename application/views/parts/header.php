@@ -1,5 +1,5 @@
-<!-- jQueryでtitleの中身が#h1_titleに入る -->
-<h1 id="h1_title">サクッとタイマー</h1>
+<!-- jQueryでtitleの中身が#h1に入る -->
+<h1 id="h1"><?=SITE_NAME?></h1>
 
 <header>
 	<a href="/" title="トップページ" id="a_logo" class="button">
@@ -7,7 +7,7 @@
 	</a>
 	<nav>
 		<h1>ナビゲーション</h1>
-		<? if(isset($_SESSION['is_login'])) { ?>
+		<? if(isset($_SESSION['login'])) { ?>
 			<ul>
 				<li><a href="/user/mypage" title="マイページ"><i class="material-icons">&#xE8B8;</i>マイページ</a></li>
 				<li><a href="/user/logout" title="ログアウト"><i class="material-icons">&#xE566;</i>ログアウト</a></li>

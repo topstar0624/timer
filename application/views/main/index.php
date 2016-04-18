@@ -1,19 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
 	<? include_once __DIR__.'/../parts/head.php'; ?>
-		<meta name="description" content="タスク名と目標タイムを決めて、いざスタート！経過時間と残り時間がひと目で分かるから、時間内にサクッと仕事が片付くようになります。会員登録すれば、過去ログ管理も可能！">
-		<title>サクッとタイマー</title>
+	<meta name="description" content="タスク名と目標タイムを決めて、いざスタート！経過時間と残り時間がひと目で分かるから、時間内にサクッと仕事が片付くようになります。会員登録すれば、過去ログ管理も可能！">
+	<title><?=SITE_NAME?></title>
 </head>
-
 <body>
-
 	<? include_once __DIR__.'/../parts/header.php'; ?>
-
 	<main>
-
 		<section id="section_task-log">
+			<h1>タスクログ</h1>
 			<h2>2016年3月3日(木)</h2>
 			<div class="block_inner">
 				<h3>■タスク名タスク名タスク名</h3>
@@ -145,7 +141,6 @@
 		<section id="section_task-timer">
 			<h1>タイマー</h1>
 			<div class="block_inner">
-				<?=$message?:'';?>
 				<form name="form_timer" target="timer" action="/main/timer">
 					<dl>
 						<dt>タスク名</dt>
@@ -177,34 +172,18 @@
 		<!-- /#section_tasktimer -->
 		<hr />
 
-		<? if(!isset($_SESSION['is_login'])) { ?>
+		<? if(!isset($_SESSION['login'])) { ?>
 			<? include_once __DIR__.'/../parts/section_user-signup.php'; ?>
 		<? } ?>
 
 	</main>
-	
-	<? if($flash = $this->session->flashdata('flash')) { ?>
-		<div id="block_flash">
-			<p><?=$flash?></p>
-		</div>
-	<? } ?>
-
 	<? include_once __DIR__.'/../parts/footer.php'; ?>
-
 	<script>
-		$(function () {
-			if('#block_flash') {
-				$('#block_flash').slideDown('slow');
-				$('#block_flash').delay(1000);
-				$('#block_flash').slideUp('slow');
-			}
-		});
-		
 		$(function () {
 			//タイマー設定までスムーズスクロール
 			$('html,body').animate({
 				scrollTop: $('#section_task-timer').offset().top-40
-			});
+			}, 1000, 'swing');
 		});
 
 		function open_timer() {
@@ -226,7 +205,5 @@
 			}
 		}
 	</script>
-
 </body>
-
 </html>

@@ -91,7 +91,7 @@ h2 {
 	border-top: 1px #CCC solid;
 }
 
-h2:first-child {
+h2:first-of-type {
 	/* 打ち消し */
 	margin-top: 0;
 	padding-top: 0;
@@ -165,10 +165,10 @@ dl {
 	list-style: none;
 }
 
-ul:first-child,
-ol:first-child,
-dl:first-child,
-dt:first-child {
+ul:first-of-type,
+ol:first-of-type,
+dl:first-of-type,
+dt:first-of-type {
 	/* 上書き */
 	margin-top: 0;
 }
@@ -234,6 +234,7 @@ button[type="button"],
 	margin-top: 1em;
 	/* floatの入れ子対策 */
 	overflow: hidden;
+	text-align: center;
 }
 
 .button_next {
@@ -257,7 +258,7 @@ p {
 	line-height: 1.75em;
 }
 
-p:first-child {
+p:first-of-type {
 	/* 上書き */
 	margin-top: 0;
 }
@@ -408,7 +409,7 @@ input[name="minutes"] {
 	line-height: 1em;
 }
 
-#section_timer td:first-child {
+#section_timer td:first-of-type {
 	text-align: right;
 }
 
@@ -578,7 +579,7 @@ footer li {
 		display: inline-block;
 		width: 48%;
 	}
-	header form li:first-child {
+	header form li:first-of-type {
 		margin-right: 4%
 	}
 	header form li:last-child {
