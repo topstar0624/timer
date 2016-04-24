@@ -224,7 +224,7 @@ class Common_Model extends CI_Model
 		}
 		$query = $this->db->insert_string($table_name, $insert_string);
 		if($this->db->query($query)) {
-			return true;
+			return $this->db->insert_id();
 		} else {
 			return false;
 		}

@@ -123,8 +123,9 @@ class User extends CI_Controller {
 			//キーが正しい場合
 			$array['key'] = $key;
 			$this->Common_Model->delete_model('temp_user_table', $array);
-			$this->Common_Model->insert_model('user_table', $array);
+			$user_id = $this->Common_Model->insert_model('user_table', $array);
 			$_SESSION = array(
+				'user_id' => $user_id,
 				'login' => 1,
 			);
 			$this->load->view('user/register');
