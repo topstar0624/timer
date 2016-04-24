@@ -6,8 +6,11 @@ class User extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Timer_Model');
+		$this->load->model('Common_Model');
+		$this->load->model('User_Model');
+		$this->load->model('Temp_User_Model');
 		$this->load->library('form_validation');
+		$this->load->library('email');
 	}
 
 	public function login()
@@ -22,8 +25,9 @@ class User extends CI_Controller {
 
 		if($this->form_validation->run()) {
 			//バリデーションエラーがなかった場合
+			$user_id = $this->User_Model->get_user_id();
 			$_SESSION = array(
-				'email' => $this->input->post('email'),
+				'user_id' => $user_id,
 				'login' => 1,
 				'flash' => 'ログインしました',
 			);
@@ -38,7 +42,7 @@ class User extends CI_Controller {
 	//email情報がPOSTされたときに呼び出されるコールバック
 	public function can_login()
 	{
-		if($this->Timer_Model->is_user()) {
+		if($this->User_Model->is_user()) {
 			//ユーザーが存在した場合
 			return true;
 		} else {
@@ -51,7 +55,7 @@ class User extends CI_Controller {
 	public function logout()
 	{
 		unset(
-			$_SESSION['email'],
+			$_SESSION['user_id'],
 			$_SESSION['login']
 		);
 		$_SESSION['flash'] = 'ログアウトしました';
@@ -75,8 +79,19 @@ class User extends CI_Controller {
 
 		if($this->form_validation->run()) {
 			//バリデーションエラーがなかった場合
-			$key = md5(uniqid(rand()));
-			$this->load->library('email');
+			
+			if($this->Temp_User_Model->is_email()) {
+				//temp_user_tableにすでにメアドの登録があった場合
+				$this->Common_Model->update_model('temp_user_table'); //パスワードを更新
+				$key = $this->Temp_User_Model->get_key(); //keyを取得
+			} else {
+				//temp_user_tableにまだメアドの登録がなかった場合
+				$key = md5(uniqid(rand())); //keyを生成
+				$array['key'] = $key;
+				$this->Common_Model->insert_model('temp_user_table', $array);
+			}
+			
+			//メール送信設定
 			$this->email->to($_POST['email']);
 			$this->email->from('no-reply@3910.club', 'サクッとタイマー事務局');
 			$this->email->bcc('no-reply@3910.club');
@@ -87,37 +102,36 @@ class User extends CI_Controller {
 こちらをクリックして、会員登録を完了してください。
 {unwrap}'.base_url().'user/resister/'.$key.'{/unwrap}
 			');
+			
 			if($this->email->send()) {
 				//メール送信が成功した場合
-				$array = $_POST;
-				$array['key'] = $key;
-				$this->Timer_Model->insert_array_model('temp_user_table', $array);
 				$this->load->view('user/temporary');
-			
 			} else {
 				//メール送信が失敗した場合
 				$data['message'] = '登録確認メールの送信が失敗しました。';
 				$this->load->view('user/signup', $data);
 			}
-			
+		
 		}else{
 			//バリデーションエラーがあった場合
-			$this->load->view('user/signup', $data);
+			$this->load->view('user/signup');
 		}
 	}
 	
 	public function resister($key){
-		if($this->Timer_Model->is_key($key)){
+		if($this->Temp_User_Model->is_key($key)){
 			//キーが正しい場合
 			$array['key'] = $key;
-			$this->Timer_Model->delete_row_model('temp_user_table', $array);
-			$data['message'] = $this->Timer_Model->insert_array_model('user_table', $array);
+			$this->Common_Model->delete_model('temp_user_table', $array);
+			$this->Common_Model->insert_model('user_table', $array);
 			$_SESSION = array(
 				'login' => 1,
 			);
-			$this->load->view('user/register', $data);
+			$this->load->view('user/register');
 		} else {
-			echo 'keyが間違ってるよ';
+			//キーが正しくない場合
+			$data['message'] ='本登録用URLの有効期限が切れているか、無効になっています。お手数をお掛けしますが、再度会員登録からお願いします。';
+			$this->load->view('user/signup', $data);
 		}
 	}
 }

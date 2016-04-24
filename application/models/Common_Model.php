@@ -1,6 +1,6 @@
 <?php
 
-class Timer_Model extends CI_Model
+class Common_Model extends CI_Model
 {
 
 	function __construct()
@@ -161,8 +161,7 @@ class Timer_Model extends CI_Model
 				return $message;
 			}
 			$this->dbforge->add_key('id', TRUE);
-			$flag = $this->dbforge->create_table($table_name);
-			if($flag) {
+			if($this->dbforge->create_table($table_name)) {
 				$message = $table_name.'の作成に成功しました';
 			} else {
 				$message = $table_name.'の作成に失敗しました';
@@ -176,8 +175,7 @@ class Timer_Model extends CI_Model
 	function drop_table_model($table_name)
 	{
 		if($this->db->table_exists($table_name)) {
-			$flag = $this->dbforge->drop_table($table_name);
-			if($flag) {
+			if($this->dbforge->drop_table($table_name)) {
 				$message = $table_name.'の削除に成功しました';
 			} else {
 				$message = $table_name.'の削除に失敗しました';
@@ -187,16 +185,16 @@ class Timer_Model extends CI_Model
 		}
 		return $message;
 	}
-
-	function insert_array_model($table_name = '', $array)
+	
+	function insert_model($table_name = '', $array = array())
 	{
 		$array['created'] = date('Y-m-d H:i:s');
 		
 		if($table_name === 'temp_user_table') {
 			$insert_string = array(
 				'key' => $array['key'],
-				'email' => $array['email'],
-				'pass' => $array['pass'],
+				'email' => $_POST['email'],
+				'pass' => $_POST['pass'],
 				'created' => $array['created'],
 			);
 		} elseif ($table_name === 'user_table') {
@@ -213,7 +211,7 @@ class Timer_Model extends CI_Model
 			}
 		} elseif ($table_name === 'task_table') {
 			$insert_string = array(
-				'user_id' => 1,
+				'user_id' => $_SESSION['user_id'],
 				'title' => $array['title'],
 				'time_limit' => $array['time_limit']?:0,
 				'time_total' => $array['time_total'],
@@ -222,26 +220,40 @@ class Timer_Model extends CI_Model
 				'created' => $array['created'],
 			);
 		} else {
-			/*
-			$message = $table_name?$table_name.'は':'';
-			$message =+ '定義されていません';
-			return $message;
-			*/
 			return false;
 		}
 		$query = $this->db->insert_string($table_name, $insert_string);
-		$flag = $this->db->query($query);
-		if($flag) {
-			//$message = $table_name.'への挿入に成功しました';
+		if($this->db->query($query)) {
 			return true;
 		} else {
-			//$message = $table_name.'の挿入に失敗しました';
 			return false;
 		}
-		//return $message;
 	}
 	
-	public function delete_row_model($table_name = '', $array)
+	function update_model($table_name = '', $array = array())
+	{
+		if($table_name === 'temp_user_table') {
+			$update_string = array(
+				'pass' => $_POST['pass'],
+			);
+			$where = array(
+				'email' => $_POST['email'],
+				'status' => 1,
+			);
+		} elseif ($table_name === 'user_table') {
+		} elseif ($table_name === 'task_table') {
+		} else {
+			return false;
+		}
+		$query = $this->db->update_string($table_name, $update_string, $where);
+		if($this->db->query($query)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public function delete_model($table_name = '', $array)
 	{
 		$array['deleted'] = date('Y-m-d H:i:s');
 		
@@ -252,47 +264,9 @@ class Timer_Model extends CI_Model
 			);
 			$this->db->where('key', $array['key']);
 		}
-		$flag = $this->db->update($table_name, $update_string);
-		if($flag) {
-			//$message = $table_name.'への挿入に成功しました';
+		if($this->db->update($table_name, $update_string)) {
 			return true;
 		} else {
-			//$message = $table_name.'の挿入に失敗しました';
-			return false;
-		}
-		//return $message;
-		
-	}
-
-	public function is_user()
-	{
-		$this->db->where(array(
-			'email' => $_POST['email'],
-			'pass' => $_POST['pass'],
-			'status' => 1,
-		));
-		$query = $this->db->get('user_table');
-		if($query->num_rows() == 1){
-			//ユーザーが存在した場合
-			return true;
-		}else{
-			//ユーザーが存在しなかった場合
-			return false;
-		}
-	}
-	
-	public function is_key($key){
-		$this->db->where(array(
-			'key' => $key,
-			'status' => 1,
-		));
-		$query = $this->db->get('temp_user_table');
-		
-		if($query->num_rows() == 1){
-			//キーが存在しない場合
-			return true;
-		} else {
-			//キーが存在しない場合
 			return false;
 		}
 	}

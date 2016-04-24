@@ -2,7 +2,7 @@
 		<h1><?=$title?></h1>
 		<div class="block_inner">
 			<?=validation_errors()?:''?>
-			<? if(isset($message)) { echo $message; } ?>
+			<? if(isset($message)) { echo '<p>'.$message.'</p>'; } ?>
 			<form action="/user/signup_validation" method="post">
 				<dl>
 					<dt>メールアドレス</dt>

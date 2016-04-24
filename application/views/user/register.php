@@ -11,8 +11,8 @@
 		<section>
 			<h1><?=$title?></h1>
 			<div class="block_inner">
-				<?=$message?:''?>
 				<p>本登録が完了しました。引き続きサクッとタイマーをご利用ください。</p>
+				<div class="block_button-container"><a href="/" title="トップページへ戻る" class="button button_center">トップページへ戻る</a></div>
 			</div>
 			<!-- /.block_inner -->
 		</section>
