@@ -10,32 +10,40 @@
 	<main>
 		<section id="section_task-log">
 			<h1>タスクログ</h1>
-			<? if(isset($tasks)) { ?>
-				<? foreach ($tasks as $task) { ?>
-					<h2><?=$task->start?></h2>
-					<div class="block_inner">
-						<h3>■<?=$task->title?></h3>
-						<table>
-							<tr>
-								<th>目標タイム&nbsp;</th>
-								<td><?=$task->time_limit?></td>
-							</tr>
-							<tr>
-								<th>合計タイム&nbsp;</th>
-								<td><?=$task->time_total?>（00:00オーバー）</td>
-							</tr>
-							<tr>
-								<th>実行時間　&nbsp;</th>
-								<td><?=$task->start?>〜<?=$task->stop?></td>
-							</tr>
-						</table>
-						<div class="block_hidden"><br /></div>
-						<div class="block_hidden">──────────────────────────────</div>
-						<div class="block_hidden"><br /></div>
-					</div>
-					<!-- /.block_inner -->
-				<? } ?>
-			<? } ?>
+			<?
+			if(isset($tasks)) :
+				foreach ($tasks as $task) :
+					$this_date = date('Ymd', strtotime($task->start));
+					if(!isset($these_date) || $these_date!==$this_date) {
+						$these_date = $this_date;
+						echo '<h2>'.$these_date.'</h2>';
+					}
+			?>
+				<div class="block_inner">
+					<h3>■<?=$task->title?></h3>
+					<table>
+						<tr>
+							<th>目標タイム&nbsp;</th>
+							<td><?=$task->time_limit?></td>
+						</tr>
+						<tr>
+							<th>合計タイム&nbsp;</th>
+							<td><?=$task->time_total?>（00:00オーバー）</td>
+						</tr>
+						<tr>
+							<th>実行時間　&nbsp;</th>
+							<td><?=$task->start?>〜<?=$task->stop?></td>
+						</tr>
+					</table>
+					<div class="block_hidden"><br /></div>
+					<div class="block_hidden">──────────────────────────────</div>
+					<div class="block_hidden"><br /></div>
+				</div>
+				<!-- /.block_inner -->
+			<?
+				endforeach;
+			endif;
+			?>
 			
 			<? /*
 			<h2>2016年3月3日(木)</h2>
