@@ -8,31 +8,41 @@
 <body>
 	<? include_once __DIR__.'/../parts/header.php'; ?>
 	<main>
+		
+		<? if(isset($tasks)) : ?>
 		<section id="section_task-log">
 			<h1>タスクログ</h1>
 			<?
-			if(isset($tasks)) :
-				foreach ($tasks as $task) :
-					$this_date = date('Ymd', strtotime($task->start));
-					if(!isset($these_date) || $these_date!==$this_date) {
-						$these_date = $this_date;
-						echo '<h2>'.$these_date.'</h2>';
-					}
+			foreach ($tasks as $task) :
+				$this_date = date('Y/m/d(D)', strtotime($task->start));
+				if(!isset($these_date) || $these_date!==$this_date) {
+					$these_date = $this_date;
+					echo '<h2>'.$these_date.'</h2>';
+				}
 			?>
 				<div class="block_inner">
 					<h3>■<?=$task->title?></h3>
 					<table>
 						<tr>
 							<th>目標タイム&nbsp;</th>
-							<td><?=$task->time_limit?></td>
+							<td><?=$task->time_limit_view?></td>
 						</tr>
 						<tr>
 							<th>合計タイム&nbsp;</th>
-							<td><?=$task->time_total?>（00:00オーバー）</td>
+							<td>
+								<?=$task->time_total_view?>
+								<?
+									if(isset($task->subtract_time_view)) {
+										echo '('.$task->subtract_time_view.'余裕)';
+									} else {
+										echo '('.$task->over_time_view.'over)';
+									}
+								?>
+							</td>
 						</tr>
 						<tr>
 							<th>実行時間　&nbsp;</th>
-							<td><?=$task->start?>〜<?=$task->stop?></td>
+							<td><?=$task->start_view?>〜<?=$task->stop_view?></td>
 						</tr>
 					</table>
 					<div class="block_hidden"><br /></div>
@@ -40,141 +50,13 @@
 					<div class="block_hidden"><br /></div>
 				</div>
 				<!-- /.block_inner -->
-			<?
-				endforeach;
-			endif;
-			?>
-			
-			<? /*
-			<h2>2016年3月3日(木)</h2>
-			<div class="block_inner">
-				<h3>■タスク名タスク名タスク名</h3>
-				<table>
-					<tr>
-						<th>目標タイム&nbsp;</th>
-						<td>00:00</td>
-					</tr>
-					<tr>
-						<th>合計タイム&nbsp;</th>
-						<td>00:00（00:00オーバー）</td>
-					</tr>
-					<tr>
-						<th>実行時間　&nbsp;</th>
-						<td>00:00〜00:00</td>
-					</tr>
-				</table>
-				<div class="block_hidden">
-					<br />
-				</div>
-				<h3>■タスク名タスク名タスク名タスク名</h3>
-				<table>
-					<tr>
-						<th>目標タイム&nbsp;</th>
-						<td>00:00</td>
-					</tr>
-					<tr>
-						<th>合計タイム&nbsp;</th>
-						<td>00:00（00:00あまり！）</td>
-					</tr>
-					<tr>
-						<th>実行時間　&nbsp;</th>
-						<td>00:00〜00:00</td>
-					</tr>
-				</table>
-				<div class="block_hidden">
-					<br />
-				</div>
-				<h3>■タスク名タスク名タスク名タスク名タスク名</h3>
-				<table>
-					<tr>
-						<th>目標タイム&nbsp;</th>
-						<td>00:00</td>
-					</tr>
-					<tr>
-						<th>合計タイム&nbsp;</th>
-						<td>00:00（00:00あまり！）</td>
-					</tr>
-					<tr>
-						<th>実行時間　&nbsp;</th>
-						<td>00:00〜00:00</td>
-					</tr>
-				</table>
-				<div class="block_hidden">
-					<br />
-				</div>
-				<div class="block_hidden">──────────────────────────────</div>
-				<div class="block_hidden">
-					<br />
-				</div>
-			</div>
-			<!-- /.block_inner -->
-			<h2>2016年3月4日(金)</h2>
-			<div class="block_inner">
-				<h3>■タスク名タスク名タスク名</h3>
-				<table>
-					<tr>
-						<th>目標タイム&nbsp;</th>
-						<td>00:00</td>
-					</tr>
-					<tr>
-						<th>合計タイム&nbsp;</th>
-						<td>00:00（00:00あまり！）</td>
-					</tr>
-					<tr>
-						<th>実行時間　&nbsp;</th>
-						<td>00:00〜00:00</td>
-					</tr>
-				</table>
-				<div class="block_hidden">
-					<br />
-				</div>
-				<h3>■タスク名タスク名タスク名タスク名</h3>
-				<table>
-					<tr>
-						<th>目標タイム&nbsp;</th>
-						<td>00:00</td>
-					</tr>
-					<tr>
-						<th>合計タイム&nbsp;</th>
-						<td>00:00（00:00オーバー）</td>
-					</tr>
-					<tr>
-						<th>実行時間　&nbsp;</th>
-						<td>00:00〜00:00</td>
-					</tr>
-				</table>
-				<div class="block_hidden">
-					<br />
-				</div>
-				<h3>■タスク名タスク名タスク名タスク名タスク名</h3>
-				<table>
-					<tr>
-						<th>目標タイム&nbsp;</th>
-						<td>00:00</td>
-					</tr>
-					<tr>
-						<th>合計タイム&nbsp;</th>
-						<td>00:00（00:00あまり！）</td>
-					</tr>
-					<tr>
-						<th>実行時間　&nbsp;</th>
-						<td>00:00〜00:00&nbsp;<img src="/common/img/sample.gif" height="16px" /></td>
-					</tr>
-				</table>
-				<div class="block_hidden">
-					<br />
-				</div>
-				<div class="block_hidden">──────────────────────────────</div>
-				<div class="block_hidden">
-					<br />
-				</div>
-			</div>
-			<!-- /.block_inner -->
-			*/ ?>
-		</section>
-		<!-- /#section_tasklog -->
-		<hr />
+			<? endforeach; ?>
+			</section>
+			<!-- /#section_tasklog -->
+			<hr />
+		<? endif; ?>
 
+		<? if(isset($_SESSION['login']) && isset($_SESSION['user_id'])) { ?>
 		<section id="section_task-timer">
 			<h1>タイマー</h1>
 			<div class="block_inner">
@@ -208,6 +90,7 @@
 		</section>
 		<!-- /#section_tasktimer -->
 		<hr />
+		<? } ?>
 
 		<? if(!isset($_SESSION['login'])) { ?>
 			<? include_once __DIR__.'/../parts/section_user-signup.php'; ?>

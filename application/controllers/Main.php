@@ -23,9 +23,25 @@ class Main extends CI_Controller {
 		
 		if(isset($_SESSION['login']) && isset($_SESSION['user_id'])) {
 			$data['tasks'] = $this->Task_Model->get_tasks();
+			foreach ($data['tasks'] as $task) {
+				$task->time_limit_view = $this->second_4_view($task->time_limit);
+				$task->time_total_view = $this->second_4_view($task->time_total);
+				$task->start_view = date('H:i:s', strtotime($task->start));
+				$task->stop_view = date('H:i:s', strtotime($task->stop));
+				if($task->time_limit>$task->time_total) {
+					$task->subtract_time_view = $this->second_4_view($task->time_limit - $task->time_total);
+				} else {
+					$task->over_time_view = $this->second_4_view($task->time_total - $task->time_limit);
+				}
+			}
 		}
 		
 		$this->load->view('main/index', $data);
+	}
+	
+	public function second_4_view($second)
+	{
+		return sprintf('%02d',floor($second/3600)).gmdate(":i:s", $second);
 	}
 	
 	public function timer()
